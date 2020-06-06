@@ -1,7 +1,8 @@
+
 require('dotenv').config()
 const request = require('request-promise')
 const btoa = require('btoa')
-const { ISSUER_URL, CLIENT_ID, CLIENT_SECRET, DEFAULT_SCOPE, PORT } = process.env
+const { ISSUER_URL, CLIENT_ID, CLIENT_SECRET } = process.env
 
 const test = async () => {
   const token = btoa(`${CLIENT_ID}:${CLIENT_SECRET}`)
@@ -15,19 +16,11 @@ const test = async () => {
       },
       form: {
         grant_type: 'client_credentials',
-        scope: DEFAULT_SCOPE,
       },
     })
 
-    const response = await request({
-      uri: `http://localhost:${PORT}`,
-      json: true,
-      headers: {
-        authorization: [token_type, access_token].join(' '),
-      },
-    })
-
-    console.log(response)
+    console.log(token_type)
+    console.log(access_token)
 
   } catch (error) {
     console.log(`Error: ${error.message}`)
